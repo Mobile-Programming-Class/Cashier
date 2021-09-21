@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Cashier</string>
+    <string name="hint1">name</string>
+    <string name="nameCus">Name Customer</string>
+    <string name="customer">Customer</string>
+    <string name="item_label">Item Name</string>
+    <string name="number_of_items_label">Number of Items</string>
+    <string name="price_label">Price</string>
+    <string name="money_paid_label">Money Paid</string>
+    <string name="btn_process_text">Proses</string>
+    <string name="btn_delete_text">Delete</string>
+    <string name="btn_close_text">Close</string>
+    <string name="inputName">input name</string>
+    <string name="inputItemLabel">input item label</string>
+    <string name="inputNumberOfItems">input number of items</string>
+    <string name="inputPrice">input price</string>
+    <string name="inputMoneyPaid">input money paid</string>
+    <string name="btn_add_to_cart">add to cart</string>
+</resources>

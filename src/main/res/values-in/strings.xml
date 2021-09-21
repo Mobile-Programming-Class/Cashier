@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cashier</string>
+    <string name="hint1">name</string>
+    <string name="nameCus">Name Customer</string>
+    <string name="customer">Pelanggan</string>
+    <string name="item_label">Nama Barang</string>
+    <string name="number_of_items_label">Jumlah Barang</string>
+    <string name="price_label">Harga Barang</string>
+    <string name="money_paid_label">Jumlah Bayar</string>
+    <string name="btn_process_text">Proses</string>
+    <string name="btn_delete_text">Hapus</string>
+    <string name="btn_close_text">Keluar</string>
+    <string name="inputName">Masukkan nama</string>
+    <string name="inputItemLabel">input nama barang</string>
+    <string name="inputNumberOfItems">input jumlah barang</string>
+    <string name="inputPrice">input harga</string>
+    <string name="inputMoneyPaid">input jumlah bayar</string>
+    <string name="btn_add_to_cart">keranjangkan</string>
+</resources>
