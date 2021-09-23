@@ -36,10 +36,6 @@
         "source": "C:\\developing\\project\\mobile\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\developing\\project\\mobile\\app\\build\\intermediates\\merged_res\\debug\\layout_cart.xml.flat",
-        "source": "C:\\developing\\project\\mobile\\app\\src\\main\\res\\layout\\cart.xml"
-    },
-    {
         "merged": "C:\\developing\\project\\mobile\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
         "source": "C:\\developing\\project\\mobile\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
@@ -62,6 +58,10 @@
     {
         "merged": "C:\\developing\\project\\mobile\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxhdpi_ic_launcher.webp.flat",
         "source": "C:\\developing\\project\\mobile\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\developing\\project\\mobile\\app\\build\\intermediates\\merged_res\\debug\\layout_item_cart.xml.flat",
+        "source": "C:\\developing\\project\\mobile\\app\\src\\main\\res\\layout\\item_cart.xml"
     },
     {
         "merged": "C:\\developing\\project\\mobile\\app\\build\\intermediates\\merged_res\\debug\\mipmap-xxxhdpi_ic_launcher.webp.flat",

@@ -1,8 +1,14 @@
+com/allam/cashier/CartAdapter.java
+ com.allam.cashier.CartAdapter
+com/allam/cashier/CartItem.java
+ com.allam.cashier.CartItem
 com/allam/cashier/BuildConfig.java
  com.allam.cashier.BuildConfig
-com/allam/cashier/model/Cart.java
- com.allam.cashier.model.Cart
 com/allam/cashier/myerrorhandler/MyDouble.java
  com.allam.cashier.myerrorhandler.MyDouble
 com/allam/cashier/MainActivity.java
  com.allam.cashier.MainActivity
+ com.allam.cashier.MainActivity$1
+ com.allam.cashier.MainActivity$2
+ com.allam.cashier.MainActivity$3
+ com.allam.cashier.MainActivity$4

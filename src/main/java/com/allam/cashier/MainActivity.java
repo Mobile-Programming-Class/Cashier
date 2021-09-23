@@ -1,136 +1,170 @@
 package com.allam.cashier;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.allam.cashier.myerrorhandler.MyDouble;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    EditText etCustomer, etItemLabel, etNumberOfItems, etPrice, etMoneyPaid;
-    TextView tvCustomer, tvItemLabel, tvNumberOfItems, tvPrice, tvMoneyPaid,
-            tvTotal, tvChanges, tvBonus, tvDescription;
-    Button btnProceed, btnDelete, btnClose, btnAddToCart;
-    ArrayList<TextView> myCart;
 
-    String customerName, itemLabel, numberOfItems, price, moneyPaid;
-    double dNumberOfItems, dPrice, dMoneyPaid, dTotal, dChanges;
-    @SuppressLint("SetTextI18n")
+    EditText etName, etItem, etNumberOfItems, etPrice, etMoneyPayed;
+    TextView tvMoneyPayed, tvTotal, tvChangeMoney, tvBonus, tvNotes;
+    Button btnProcess, btnDelete, btnClose, btnPay;
+
+    String name, item, numberOfItemsStr, priceStr, moneyPayedStr;
+    double numberOfItems, price, moneyPayed, changeMoney, total = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Aplikasi Penjualan");
+//        getSupportActionBar().setTitle("Aplikasi Penjualan");
 
-        myCart = new ArrayList<>();
+        // Construct the data source
+        ArrayList<CartItem> arrayOfUsers = new ArrayList<>();
+        // Create the adapter to convert the array to views
+        CartAdapter adapter = new CartAdapter(this, arrayOfUsers);
+        // Attach the adapter to a ListView
+        ListView listView = (ListView) findViewById(R.id.lvItem);
+        listView.setAdapter(adapter);
+
+        setListViewHeightBasedOnChildren(listView);
 
         //EditText
-        etCustomer = findViewById(R.id.etCustomer);
-        etItemLabel = findViewById(R.id.etItemLabel);
+        etName = findViewById(R.id.etName);
+        etItem = findViewById(R.id.etItem);
         etNumberOfItems = findViewById(R.id.etNumberOfItems);
         etPrice = findViewById(R.id.etPrice);
-        etMoneyPaid = findViewById(R.id.etMoneyPaid);
+        etMoneyPayed = findViewById(R.id.etMoneyPayed);
 
         //TextView
-        tvCustomer = findViewById(R.id.tvCustomerName);
-        tvItemLabel = findViewById(R.id.tvItemCart);
-        tvNumberOfItems = findViewById(R.id.tvNumberOfItemsCart);
-        tvPrice = findViewById(R.id.tvPriceCart);
-        tvMoneyPaid = findViewById(R.id.tvMoneyPaidCart);
+        tvMoneyPayed = findViewById(R.id.tvMoneyPayed);
         tvTotal = findViewById(R.id.tvTotal);
-        tvChanges = findViewById(R.id.tvChanges);
+        tvChangeMoney = findViewById(R.id.tvChangeMoney);
         tvBonus = findViewById(R.id.tvBonus);
-        tvDescription = findViewById(R.id.tvDescription);
+        tvNotes = findViewById(R.id.tvNotes);
 
         //Button
-        btnProceed = findViewById(R.id.btnProceed);
+        btnProcess = findViewById(R.id.btnProcess);
         btnDelete = findViewById(R.id.btnDelete);
         btnClose = findViewById(R.id.btnClose);
-        btnAddToCart = findViewById(R.id.btnAddToCart);
+        btnPay = findViewById(R.id.btnPay);
 
-        //Proceed
-        btnProceed.setOnClickListener(view -> {
-            customerName = etCustomer.getText().toString().trim();
-            itemLabel = etItemLabel.getText().toString().trim();
-            numberOfItems = etNumberOfItems.getText().toString().trim();
-            price = etPrice.getText().toString().trim();
-            moneyPaid = etMoneyPaid.getText().toString().trim();
+        // Set data to default
+        tvMoneyPayed.setText(R.string.money_payed_default_text);
+        tvChangeMoney.setText(R.string.default_text);
+        tvNotes.setText(R.string.default_text);
+        tvBonus.setText(R.string.default_text);
+        tvTotal.setText(R.string.total_default_text);
 
-            dNumberOfItems = MyDouble.myParseDouble(numberOfItems);
-            dPrice = MyDouble.myParseDouble(price);
-            dMoneyPaid = MyDouble.myParseDouble(moneyPaid);
-            dTotal = (dNumberOfItems * dPrice);
+        //Proses
+        btnProcess.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View view) {
+                name = etName.getText().toString().trim();
+                item = etItem.getText().toString().trim();
+                numberOfItemsStr = etNumberOfItems.getText().toString().trim();
+                priceStr = etPrice.getText().toString().trim();
 
-            tvCustomer.setText("Nama Pembeli : " + customerName);
-            tvItemLabel.setText("Nama Barang : " + itemLabel);
-            tvNumberOfItems.setText("Jumlah Barang : " + numberOfItems);
-            tvPrice.setText("Harga Barang : " + price);
-            tvMoneyPaid.setText("Uang bayar : " + moneyPaid);
+                numberOfItems = MyDouble.myParseDouble(numberOfItemsStr);
+                price = MyDouble.myParseDouble(priceStr);
+                double totalPrice = (numberOfItems * price);
 
-            tvTotal.setText("Total Belanja " + dTotal);
-            if (dTotal >= 200000) {
-                tvBonus.setText("Bonus : HardDisk 1TB");
-            } else if (dTotal >= 50000) {
-                tvBonus.setText("Bonus : Keyboard Gaming");
-            } else if (dTotal >= 40000) {
-                tvBonus.setText("Bonus : Mouse Gaming");
-            } else {
-                tvBonus.setText("Bonus : Tidak ada bonus!");
+                CartItem newItem = new CartItem(name, item, numberOfItemsStr, priceStr, String.valueOf(totalPrice));
+                adapter.add(newItem);
+
+                setListViewHeightBasedOnChildren(listView);
+
+                total += totalPrice;
+
+                tvTotal.setText("Total Belanja = " + total);
             }
-
-            dChanges = (dMoneyPaid - dTotal);
-            if (dMoneyPaid < dTotal) {
-                tvDescription.setText("Description : Uang bayar kurang Rp. " + (-dChanges));
-                tvChanges.setText("Uang Kembalian : Rp. 0");
-            } else {
-                tvDescription.setText("Description : Tunggu Kembalian");
-                tvChanges.setText("Uang Kembalian : Rp. " + dChanges);
-            }
-
         });
 
-        btnDelete.setOnClickListener(view -> {
-            tvCustomer.setText("");
-            tvItemLabel.setText("");
-            tvNumberOfItems.setText("");
-            tvPrice.setText("");
-            tvMoneyPaid.setText("");
-            tvChanges.setText("");
-            tvDescription.setText("");
-            tvBonus.setText("");
-            tvTotal.setText("");
+        btnPay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-            Toast.makeText(getApplicationContext(), "Data sudah dihapus", Toast.LENGTH_SHORT).show();
+                moneyPayedStr = etMoneyPayed.getText().toString().trim();
+
+                moneyPayed = MyDouble.myParseDouble(moneyPayedStr);
+
+                tvMoneyPayed.setText( "Uang bayar : " + moneyPayedStr);
+
+                tvTotal.setText("Total Belanja = " + total);
+                if (total >= 200000) {
+                    tvBonus.setText(R.string.bonus_1_text);
+                } else if (total >= 50000) {
+                    tvBonus.setText(R.string.bonus_2_text);
+                } else if (total >= 40000) {
+                    tvBonus.setText(R.string.bonus_3_text);
+                } else {
+                    tvBonus.setText(R.string.no_bonus_text);
+                }
+
+                changeMoney = (moneyPayed - total);
+                if (moneyPayed < total) {
+                    tvNotes.setText("Keterangan : Uang bayar kurang Rp. " + (-changeMoney));
+                    tvChangeMoney.setText("Uang Kembalian : Rp. 0");
+                } else {
+                    tvNotes.setText(R.string.change_money_notes);
+                    tvChangeMoney.setText("Uang Kembalian : Rp. " + changeMoney);
+                }
+            }
         });
 
-        btnClose.setOnClickListener(view -> moveTaskToBack(true));
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvMoneyPayed.setText(R.string.money_payed_default_text);
+                tvChangeMoney.setText(R.string.default_text);
+                tvNotes.setText(R.string.default_text);
+                tvBonus.setText(R.string.default_text);
+                tvTotal.setText(R.string.total_default_text);
 
-        btnAddToCart.setOnClickListener(view -> {
-            TextView myItem = new TextView(this);
-            String myText = tvCustomer.getText() + "\n" + tvNumberOfItems.getText() + "\n" + tvItemLabel.getText() + "\n" + "Total: " + tvTotal.getText();
-            myItem.setText(myText);
-            myItem.setId(View.generateViewId());
+                Toast.makeText(getApplicationContext(), "Data sudah dihapus", Toast.LENGTH_SHORT).show();
+            }
+        });
 
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            if (myCart.size() == 0) params.addRule(RelativeLayout.BELOW, R.id.top_0);
-            else params.addRule(RelativeLayout.BELOW, myCart.get(myCart.size()-1).getId());
-            myItem.setLayoutParams(params);
-
-            RelativeLayout rlMain = findViewById(R.id.rlMain);
-            rlMain.addView(myItem);
-            myCart.add(myItem);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moveTaskToBack(true);
+            }
         });
 
     }
 
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
 }

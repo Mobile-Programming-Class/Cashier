@@ -16,4 +16,17 @@
     <string name="inputPrice">input price</string>
     <string name="inputMoneyPaid">input money paid</string>
     <string name="btn_add_to_cart">add to cart</string>
+    <string name="order_label">Pesanan</string>
+    <string name="name_label">Nama</string>
+    <string name="money_payed_label">Uang bayar</string>
+    <string name="cart_label">Keranjang Belanja</string>
+    <string name="btn_pay_text">Pay</string>
+    <string name="money_payed_default_text">Belum membayar</string>
+    <string name="default_text">-</string>
+    <string name="total_default_text">Belum ada barang di keranjang</string>
+    <string name="bonus_1_text">Bonus : HardDisk 1TB</string>
+    <string name="bonus_2_text">Bonus : Keyboard Gaming</string>
+    <string name="bonus_3_text">Bonus : Mouse Gaming</string>
+    <string name="no_bonus_text">Bonus : Tidak ada bonus</string>
+    <string name="change_money_notes">Keterangan : Tunggu kembalian</string>
 </resources>
